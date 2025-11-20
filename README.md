@@ -1,5 +1,3 @@
-Отлично! Теперь я полностью понимаю концепцию. Давайте создадим README.md, который отражает всю философию проекта и его поэтапное развитие.
-
 # Financial Dashboard 🚀
 
 **Your Personal Financial Control Panel - Like a Car Dashboard for Your Money!**
@@ -415,5 +413,6 @@ This project is licensed under the MIT License - see details in LICENSE file.
 ---
 
 **🚀 Ready to track your financial weather? Start using Financial Dashboard today!**
+
 
 *Note: This is an educational project. Always verify financial data with official sources before making investment decisions.*
