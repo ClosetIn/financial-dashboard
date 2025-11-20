@@ -11,12 +11,22 @@ class Settings(BaseSettings):
     api_prefix: str = "/api/v1"
     host: str = "0.0.0.0"
     port: int = 8000
-
     cors_origins: list = ["*"]
 
-    # Внешние API
+    # Настройки базы данных (День 2)
+    database_url: str = (
+        "postgresql+asyncpg://admin:password@localhost:5432/financial_dashboard"
+    )
+    sync_database_url: str = (
+        "postgresql://admin:password@localhost:5432/financial_dashboard"
+    )
+    database_pool_size: int = 5
+    database_max_overflow: int = 10
+
+    # Настройки внешних API
     cbr_api_url: str = "https://www.cbr-xml-daily.ru/daily_json.js"
-    cbr_request_timeout: int = 10
+    moex_api_url: str = "https://iss.moex.com/iss"
+    api_timeout: int = 10
 
     # Логирование
     log_level: str = "INFO"

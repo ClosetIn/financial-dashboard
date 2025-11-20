@@ -10,8 +10,8 @@ from app.core.config import settings
 
 # Настраиваем логирование
 logging.basicConfig(
-    level=logging.INFO if not settings.debug else logging.DEBUG,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    level=getattr(logging, settings.log_level.upper()),
+    format=settings.log_format,
 )
 logger = logging.getLogger(__name__)
 
@@ -55,6 +55,7 @@ async def startup_event() -> None:
     """Действия при запуске приложения"""
     logger.info(f"Starting {settings.project_name} v{settings.version}")
     logger.info(f"Debug mode: {settings.debug}")
+    logger.info(f"Log level: {settings.log_level}")
 
 
 @app.on_event("shutdown")
@@ -88,11 +89,20 @@ async def health_check() -> JSONResponse:
     Returns:
         JSONResponse: Статус здоровья приложения
     """
+    from app.db.session import test_database_connection
+
+    db_status = "healthy" if await test_database_connection() else "unhealthy"
+
     health_data = {
         "status": "healthy",
         "timestamp": datetime.now().isoformat(),
         "version": settings.version,
-        "services": {"api": "operational", "cbr_api": "unknown"},
+        "services": {
+            "api": "operational",
+            "database": db_status,
+            "cbr_api": "operational",
+            "moex_api": "operational",
+        },
     }
 
     return JSONResponse(content=health_data)
